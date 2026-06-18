@@ -24,7 +24,7 @@ export default function MobileMenuDrawer({ isOpen, onClose, onNavigate, onOpenCa
         {/* Header */}
         <div className="bg-gray-50 border-b border-gray-150 p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/amigo_logo.png" alt="Amigocart Logo" className="h-7 w-auto object-contain" />
+            <img src="/amigo_logo.png" alt="Amigocart Logo" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
             <span className="font-black text-purple-900 tracking-tight text-base">amigocart</span>
           </div>
           <button 

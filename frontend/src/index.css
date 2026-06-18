@@ -1037,6 +1037,9 @@ body {
 .w-auto {
   width: auto;
 }
+.h-7 {
+  height: 1.75rem;
+}
 
 /* Header Rebranding & Mobile Hamburger Visual Styles */
 .header-logo {
