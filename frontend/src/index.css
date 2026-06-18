@@ -87,8 +87,14 @@ body {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+@media (min-width: 768px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
 /* 1. Flexbox Utilities */
@@ -180,6 +186,7 @@ body {
   .md\:w-auto { width: auto; }
   .md\:flex-grow { flex-grow: 1; }
   .md\:max-w-xl { max-w: 36rem; }
+  .md\:gap-8 { gap: 2rem; }
 }
  
 /* 4. Spacing (Margin & Padding) */
@@ -976,6 +983,40 @@ body {
     display: none !important;
   }
 }
+
+/* Header location picker address text constraints */
+.header-address {
+  max-width: 80px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (min-width: 360px) {
+  .header-address {
+    max-width: 110px;
+  }
+}
+@media (min-width: 768px) {
+  .header-address {
+    max-width: 180px;
+  }
+}
+
+/* Truncation utility */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Tiny Font Size Fallbacks for Uncompiled Tailwind */
+.text-\[8px\] { font-size: 8px; }
+.text-\[9px\] { font-size: 9px; }
+.text-\[10px\] { font-size: 10px; }
+.text-\[11px\] { font-size: 11px; }
+.text-\[12px\] { font-size: 12px; }
+.text-\[13px\] { font-size: 13px; }
 
 
 

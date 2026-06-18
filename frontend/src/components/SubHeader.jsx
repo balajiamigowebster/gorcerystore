@@ -16,7 +16,7 @@ const SUB_HEADER_ITEMS = [
 export default function SubHeader({ activeTab, onSelectTab }) {
   return (
     <div className="sticky-subheader overflow-x-auto scrollbar-none">
-      <div className="container flex items-center justify-start md:justify-center gap-8 px-4">
+      <div className="container flex items-center justify-start md:justify-center gap-4 md:gap-8 px-4">
         {SUB_HEADER_ITEMS.map((item) => {
           const IconComponent = item.icon;
           const isActive = activeTab === item.id;

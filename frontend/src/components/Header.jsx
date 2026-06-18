@@ -37,7 +37,7 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
             onClick={onOpenAddressModal} 
             className="flex items-center gap-1 cursor-pointer transition duration-150"
           >
-            <span className="text-xs font-bold text-gray-800 truncate tracking-tight max-w-[130px] md:max-w-[160px] hover:text-purple-800">
+            <span className="text-xs font-bold text-gray-800 tracking-tight header-address hover:text-purple-800">
               {deliveryAddress || 'Select Location'}
             </span>
             <ChevronDown size={14} className="text-gray-500 flex-shrink-0" />
