@@ -9,6 +9,36 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// 0. Diagnostic Debug DB Endpoint
+app.get('/api/debug-db', async (req, res) => {
+  const dbName = process.env.DB_NAME || 'zepto_db';
+  const config = {
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    port: process.env.DB_PORT || 3306,
+    database: dbName,
+    hasPassword: !!process.env.DB_PASSWORD,
+    nodeEnv: process.env.NODE_ENV,
+    isVercel: !!process.env.VERCEL
+  };
+  
+  try {
+    const mysql = require('mysql2/promise');
+    const connection = await mysql.createConnection({
+      host: config.host,
+      user: config.user,
+      password: process.env.DB_PASSWORD || '',
+      port: config.port,
+      database: config.database,
+      connectTimeout: 3000 // 3-second short timeout
+    });
+    await connection.end();
+    res.json({ success: true, message: "Database connection successful!", config });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, config });
+  }
+});
+
 // 1. Get Categories
 app.get('/api/categories', async (req, res) => {
   try {
