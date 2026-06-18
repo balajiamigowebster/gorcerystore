@@ -393,7 +393,7 @@ export default function AdminDashboard({ onBackToHome }) {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h2 className="text-2xl font-black text-purple-950 flex items-center gap-2">
-            <BarChart2 size={24} className="text-purple-700" /> Zepto Store Admin Panel
+            <BarChart2 size={24} className="text-purple-700" /> Amigocart Store Admin Panel
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">Real-time MariaDB inventory control & transaction logs</p>
         </div>
@@ -1146,13 +1146,13 @@ export default function AdminDashboard({ onBackToHome }) {
                 {/* Invoice Header */}
                 <div className="flex justify-between items-start border-b border-dashed border-gray-200 pb-4 mb-4">
                   <div>
-                    <h1 className="text-2xl font-black text-purple-800 tracking-tight">ZEPTO INVOICE</h1>
+                    <h1 className="text-2xl font-black text-purple-800 tracking-tight">AMIGOCART INVOICE</h1>
                     <p className="text-[10px] text-gray-400 font-bold uppercase mt-1">Transaction Ledger Receipt</p>
                   </div>
                   <div className="text-right text-xs">
-                    <h2 className="font-extrabold text-gray-900">Zepto Clone Super Store</h2>
+                    <h2 className="font-extrabold text-gray-900">Amigocart Super Store</h2>
                     <p className="text-gray-400 text-[10px] mt-0.5">Bangalore Central Hub, KA</p>
-                    <p className="text-gray-400 text-[10px]">support@zepto-clone.com</p>
+                    <p className="text-gray-400 text-[10px]">support@amigocart.com</p>
                   </div>
                 </div>
 
@@ -1213,7 +1213,7 @@ export default function AdminDashboard({ onBackToHome }) {
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-4 border-t border-dashed border-gray-200 pt-4">
                   <div className="text-[10px] text-gray-400 font-semibold max-w-[280px]">
                     <p className="font-bold uppercase text-gray-500 mb-1">Payment Method & Safety</p>
-                    <p>This invoice is electronically generated and acts as a safe receipt. Delivery fulfilled by Zepto central hub.</p>
+                    <p>This invoice is electronically generated and acts as a safe receipt. Delivery fulfilled by Amigocart central hub.</p>
                   </div>
                   <div className="w-full sm:w-64 flex flex-col gap-2 text-xs">
                     <div className="flex justify-between text-gray-550">

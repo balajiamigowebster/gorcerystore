@@ -95,7 +95,7 @@ export default function CategoryProductRow({ cat, catProducts, onSelectCategory 
           className="flex overflow-x-auto gap-4 pb-3 scrollbar-none scroll-smooth"
         >
           {catProducts.map((product) => (
-            <div key={product.id} className="w-[300px] flex-shrink-0">
+            <div key={product.id} className="category-product-item">
               <ProductCard product={product} />
             </div>
           ))}
