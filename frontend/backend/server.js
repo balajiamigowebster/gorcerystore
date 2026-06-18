@@ -17,7 +17,7 @@ app.get('/api/categories', async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error('Error fetching categories:', error);
-    res.status(500).json({ error: 'Failed to fetch categories' });
+    res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
 
@@ -48,7 +48,7 @@ app.get('/api/products', async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error('Error fetching products:', error);
-    res.status(500).json({ error: 'Failed to fetch products' });
+    res.status(500).json({ error: error.message, stack: error.stack });
   }
 });
 
