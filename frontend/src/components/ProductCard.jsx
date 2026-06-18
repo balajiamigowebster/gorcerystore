@@ -2,10 +2,12 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Plus, Minus, Star, Zap } from 'lucide-react';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onOpenDetails }) {
   const { cartItems, addToCart, removeFromCart } = useCart();
   
-  const cartItem = cartItems.find((item) => Number(item.id) === Number(product.id));
+  const cartItem = cartItems.find(
+    (item) => Number(item.id) === Number(product.id) && item.selectedUnit === (product.selectedUnit || product.unit)
+  );
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const originalPrice = Number(product.price);
@@ -16,7 +18,10 @@ export default function ProductCard({ product }) {
   const discountAmount = discountPrice !== null ? Math.round(originalPrice - discountPrice) : 0;
 
   return (
-    <div className="product-card bg-white select-none">
+    <div 
+      onClick={() => onOpenDetails && onOpenDetails(product)}
+      className="product-card bg-white select-none cursor-pointer"
+    >
       
       {/* Product Image Wrapper */}
       <div className="product-image-wrapper">
@@ -53,7 +58,7 @@ export default function ProductCard({ product }) {
           ) : (
             <div className="product-qty-selector">
               <button
-                onClick={(e) => { e.stopPropagation(); removeFromCart(product.id); }}
+                onClick={(e) => { e.stopPropagation(); removeFromCart(product.id, product.selectedUnit || product.unit); }}
                 className="product-qty-btn"
               >
                 <Minus size={10} className="stroke-[3]" />

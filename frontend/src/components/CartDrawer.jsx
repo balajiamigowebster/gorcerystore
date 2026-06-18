@@ -204,7 +204,7 @@ export default function CartDrawer({ isOpen, onClose, onOpenLoginModal, onOrderP
               {cartItems.map((item) => {
                 const itemPrice = item.discount_price !== null ? Number(item.discount_price) : Number(item.price);
                 return (
-                  <div key={item.id} className="p-4 flex gap-3 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition duration-150">
+                  <div key={item.id + '-' + item.selectedUnit} className="p-4 flex gap-3 border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition duration-150">
                     <img 
                       src={item.image_url} 
                       alt={item.name} 
@@ -213,7 +213,7 @@ export default function CartDrawer({ isOpen, onClose, onOpenLoginModal, onOrderP
                     <div className="flex-grow flex flex-col justify-between text-left">
                       <div>
                         <h4 className="text-xs font-bold text-gray-800 line-clamp-1">{item.name}</h4>
-                        <span className="text-[10px] text-gray-400">{item.unit}</span>
+                        <span className="text-[10px] text-gray-400">{item.selectedUnit || item.unit}</span>
                       </div>
                       <div className="flex items-center gap-1.5 mt-1">
                         <span className="text-xs font-extrabold text-gray-900">₹{itemPrice.toFixed(0)}</span>
@@ -227,7 +227,7 @@ export default function CartDrawer({ isOpen, onClose, onOpenLoginModal, onOrderP
                     <div className="flex flex-col justify-between items-end">
                       <div className="flex items-center bg-pink-600 text-white rounded-xl overflow-hidden shadow-xs">
                         <button 
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.id, item.selectedUnit)}
                           className="px-2 py-1.5 hover:bg-pink-700 transition duration-150"
                         >
                           <Minus size={10} className="stroke-[3]" />

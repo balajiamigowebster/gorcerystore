@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from './ProductCard';
 
-export default function CategoryProductRow({ cat, catProducts, onSelectCategory }) {
+export default function CategoryProductRow({ cat, catProducts, onSelectCategory, onOpenDetails }) {
   const scrollRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -96,7 +96,7 @@ export default function CategoryProductRow({ cat, catProducts, onSelectCategory 
         >
           {catProducts.map((product) => (
             <div key={product.id} className="category-product-item">
-              <ProductCard product={product} />
+              <ProductCard product={product} onOpenDetails={onOpenDetails} />
             </div>
           ))}
         </div>

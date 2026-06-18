@@ -274,6 +274,70 @@ async function initializeDatabase() {
       console.log('Database already populated. Skipping seeding.');
     }
 
+    // 1. Add variants column to products if not exists
+    try {
+      await connection.query('ALTER TABLE products ADD COLUMN variants TEXT DEFAULT NULL;');
+      console.log('Added variants column to products.');
+    } catch (e) {
+      // Column might already exist, ignore
+    }
+
+    // 2. Insert Akshayakalpa Curd with variants if not exists
+    const [existingCurd] = await connection.query("SELECT id FROM products WHERE name = 'Akshayakalpa Artisanal Organic Set Curd'");
+    if (existingCurd.length === 0) {
+      const [dairyCat] = await connection.query("SELECT id FROM categories WHERE name = 'Dairy, Bread & Eggs'");
+      if (dairyCat.length > 0) {
+        const catId = dairyCat[0].id;
+        const curdVariantsJson = JSON.stringify([
+          { unit: '500 g', price: 80.00, discount_price: 80.00 },
+          { unit: '1 kg', price: 155.00, discount_price: 155.00 },
+          { unit: '2 kg', price: 310.00, discount_price: 310.00 }
+        ]);
+        await connection.query(`
+          INSERT INTO products (name, description, price, discount_price, category_id, image_url, unit, stock, is_fresh, rating, rating_count, is_bestseller, special_tag, variants)
+          VALUES (
+            'Akshayakalpa Artisanal Organic Set Curd',
+            'Certified organic set curd made with pure cow milk.',
+            155.00,
+            155.00,
+            ?,
+            'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80',
+            '1 kg',
+            100,
+            1,
+            4.5,
+            '(9.2k)',
+            0,
+            'Organic',
+            ?
+          )
+        `, [catId, curdVariantsJson]);
+        console.log('Akshayakalpa Curd product seeded with variants.');
+      }
+    } else {
+      const curdVariantsJson = JSON.stringify([
+        { unit: '500 g', price: 80.00, discount_price: 80.00 },
+        { unit: '1 kg', price: 155.00, discount_price: 155.00 },
+        { unit: '2 kg', price: 310.00, discount_price: 310.00 }
+      ]);
+      await connection.query("UPDATE products SET variants = ? WHERE name = 'Akshayakalpa Artisanal Organic Set Curd'", [curdVariantsJson]);
+    }
+
+    // 3. Update existing Onion and Tomato with variants
+    const onionVariantsJson = JSON.stringify([
+      { unit: '500 g', price: 20.00, discount_price: 20.00 },
+      { unit: '1 kg', price: 38.00, discount_price: 38.00 },
+      { unit: '2 kg', price: 72.00, discount_price: 72.00 }
+    ]);
+    await connection.query("UPDATE products SET variants = ? WHERE name = 'Onion'", [onionVariantsJson]);
+
+    const tomatoVariantsJson = JSON.stringify([
+      { unit: '500 g', price: 24.00, discount_price: 24.00 },
+      { unit: '1 kg', price: 45.00, discount_price: 45.00 },
+      { unit: '2 kg', price: 85.00, discount_price: 85.00 }
+    ]);
+    await connection.query("UPDATE products SET variants = ? WHERE name = 'Tomato - Hybrid'", [tomatoVariantsJson]);
+
   } catch (error) {
     console.error('Database initialization error:', error);
     throw error;

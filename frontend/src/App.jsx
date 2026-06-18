@@ -12,6 +12,7 @@ import OrderTracker from './components/OrderTracker';
 import AdminDashboard from './components/AdminDashboard';
 import CategoryProductRow from './components/CategoryProductRow';
 import MobileMenuDrawer from './components/MobileMenuDrawer';
+import ProductDetailModal from './components/ProductDetailModal';
 import { Sparkles, HelpCircle, Shield } from 'lucide-react';
 
 function AppContent() {
@@ -34,6 +35,7 @@ function AppContent() {
   const [addressOpen, setAddressOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [detailProduct, setDetailProduct] = useState(null);
 
   // Tip selected during checkout
   const [driverTip, setDriverTip] = useState(0);
@@ -299,7 +301,7 @@ function AppContent() {
                 /* Single Grid View for Search/Category filter */
                 <div className="grid grid-responsive">
                   {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard key={product.id} product={product} onOpenDetails={(p) => setDetailProduct(p)} />
                   ))}
                 </div>
               ) : (
@@ -314,6 +316,7 @@ function AppContent() {
                         cat={cat}
                         catProducts={catProducts}
                         onSelectCategory={handleSelectCategory}
+                        onOpenDetails={(p) => setDetailProduct(p)}
                       />
                     );
                   })}
@@ -399,6 +402,12 @@ function AppContent() {
           setMobileMenuOpen(false);
           setLoginOpen(true);
         }}
+      />
+
+      <ProductDetailModal
+        product={detailProduct}
+        isOpen={!!detailProduct}
+        onClose={() => setDetailProduct(null)}
       />
 
     </div>

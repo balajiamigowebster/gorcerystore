@@ -32,37 +32,72 @@ export function CartProvider({ children }) {
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => Number(item.id) === Number(product.id));
+      const targetUnit = product.selectedUnit || product.unit;
+      const targetPrice = product.selectedPrice !== undefined ? Number(product.selectedPrice) : Number(product.price);
+      const targetDiscountPrice = product.selectedDiscountPrice !== undefined 
+        ? (product.selectedDiscountPrice !== null ? Number(product.selectedDiscountPrice) : null)
+        : (product.discount_price !== null ? Number(product.discount_price) : null);
+
+      const existingItem = prevItems.find(
+        (item) => Number(item.id) === Number(product.id) && item.selectedUnit === targetUnit
+      );
+
       if (existingItem) {
         return prevItems.map((item) =>
-          Number(item.id) === Number(product.id) ? { ...item, quantity: item.quantity + 1 } : item
+          Number(item.id) === Number(product.id) && item.selectedUnit === targetUnit
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
-      return [...prevItems, { ...product, id: Number(product.id), quantity: 1 }];
+
+      const newCartItem = {
+        ...product,
+        id: Number(product.id),
+        selectedUnit: targetUnit,
+        price: targetPrice,
+        discount_price: targetDiscountPrice,
+        quantity: 1
+      };
+      return [...prevItems, newCartItem];
     });
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = (productId, selectedUnit = null) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => Number(item.id) === Number(productId));
+      const existingItem = prevItems.find(
+        (item) => Number(item.id) === Number(productId) && 
+                  (selectedUnit === null || item.selectedUnit === selectedUnit)
+      );
+
       if (!existingItem) return prevItems;
+      const targetUnit = existingItem.selectedUnit;
+
       if (existingItem.quantity === 1) {
-        return prevItems.filter((item) => Number(item.id) !== Number(productId));
+        return prevItems.filter(
+          (item) => !(Number(item.id) === Number(productId) && item.selectedUnit === targetUnit)
+        );
       }
+
       return prevItems.map((item) =>
-        Number(item.id) === Number(productId) ? { ...item, quantity: item.quantity - 1 } : item
+        Number(item.id) === Number(productId) && item.selectedUnit === targetUnit
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
       );
     });
   };
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = (productId, selectedUnit, quantity) => {
     if (quantity <= 0) {
-      setCartItems((prevItems) => prevItems.filter((item) => Number(item.id) !== Number(productId)));
+      setCartItems((prevItems) =>
+        prevItems.filter((item) => !(Number(item.id) === Number(productId) && item.selectedUnit === selectedUnit))
+      );
       return;
     }
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        Number(item.id) === Number(productId) ? { ...item, quantity } : item
+        Number(item.id) === Number(productId) && item.selectedUnit === selectedUnit
+          ? { ...item, quantity }
+          : item
       )
     );
   };
