@@ -92,7 +92,7 @@ export default function CategoryProductRow({ cat, catProducts, onSelectCategory 
         {/* Horizontal Scroll Product List */}
         <div 
           ref={scrollRef}
-          className="flex overflow-x-auto gap-4 pb-3 scrollbar-none scroll-smooth"
+          className="flex overflow-x-auto gap-4 pb-3 scrollbar-none"
         >
           {catProducts.map((product) => (
             <div key={product.id} className="category-product-item">

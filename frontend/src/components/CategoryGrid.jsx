@@ -113,7 +113,7 @@ export default function CategoryGrid({ categories, activeCategory, onSelectCateg
       {/* Grid: Flex Horizontal Scrollable */}
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto gap-4 pb-1 scrollbar-none scroll-smooth"
+        className="flex overflow-x-auto gap-4 pb-1 scrollbar-none"
       >
         
         {/* All Products Option */}
