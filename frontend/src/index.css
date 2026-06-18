@@ -1228,3 +1228,24 @@ body {
   text-align: left;
   margin-top: 1.25rem;
 }
+
+.product-unit-badge-interactive {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 800;
+  color: #0052fe;
+  background-color: rgba(0, 82, 254, 0.05);
+  border: 1px solid rgba(0, 82, 254, 0.15);
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.product-unit-badge-interactive:hover {
+  background-color: rgba(0, 82, 254, 0.1);
+  border-color: rgba(0, 82, 254, 0.25);
+}
+

@@ -1,9 +1,21 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
-import { Plus, Minus, Star, Zap } from 'lucide-react';
+import { Plus, Minus, Star, Zap, ChevronDown } from 'lucide-react';
 
 export default function ProductCard({ product, onOpenDetails }) {
   const { cartItems, addToCart, removeFromCart } = useCart();
+  
+  const hasVariants = React.useMemo(() => {
+    if (!product.variants) return false;
+    try {
+      const parsed = typeof product.variants === 'string' 
+        ? JSON.parse(product.variants) 
+        : product.variants;
+      return Array.isArray(parsed) && parsed.length > 1;
+    } catch (e) {
+      return false;
+    }
+  }, [product.variants]);
   
   const cartItem = cartItems.find(
     (item) => Number(item.id) === Number(product.id) && item.selectedUnit === (product.selectedUnit || product.unit)
@@ -97,9 +109,17 @@ export default function ProductCard({ product, onOpenDetails }) {
         </h4>
 
         {/* Pack / Size Unit */}
-        <span className="product-unit">
-          {product.unit}
-        </span>
+        <div className="mt-1 flex">
+          {hasVariants ? (
+            <span className="product-unit-badge-interactive">
+              {product.unit} <ChevronDown size={10} className="inline ml-0.5 stroke-[3]" />
+            </span>
+          ) : (
+            <span className="product-unit">
+              {product.unit}
+            </span>
+          )}
+        </div>
 
         {/* Footer special tags or ratings */}
         {product.special_tag ? (
