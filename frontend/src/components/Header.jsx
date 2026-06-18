@@ -26,7 +26,7 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
           {/* Hamburger Menu on Mobile */}
           <button 
             onClick={onOpenMobileMenu}
-            className="md:hidden text-gray-700 hover:text-purple-800 p-1 mr-1 transition cursor-pointer flex items-center justify-center"
+            className="header-hamburger"
             title="Open Menu"
           >
             <Menu size={22} />
@@ -38,7 +38,7 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
             className="cursor-pointer flex items-center"
             title="Amigocart Home"
           >
-            <img src="/amigo_logo.png" alt="Amigocart Logo" className="h-8 md:h-10 w-auto object-contain" />
+            <img src="/amigo_logo.png" alt="Amigocart Logo" className="header-logo" />
           </div>
 
           {/* Location Picker */}

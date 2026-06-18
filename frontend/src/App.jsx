@@ -192,7 +192,7 @@ function AppContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50/50 overflow-x-hidden w-full">
+    <div className="flex flex-col min-h-screen bg-gray-50/50 w-full">
       
       {/* Header */}
       {activePage !== 'admin' && (
