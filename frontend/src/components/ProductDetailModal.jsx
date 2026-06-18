@@ -184,6 +184,12 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
               const vActivePrice = v.discount_price !== null ? v.discount_price : v.price;
               const vPricePerUnit = getPricePerUnit(vActivePrice, v.unit);
 
+              // Find specific cart item quantity for this variant
+              const vCartItem = cartItems.find(
+                (item) => Number(item.id) === Number(product.id) && item.selectedUnit === v.unit
+              );
+              const vQty = vCartItem ? vCartItem.quantity : 0;
+
               return (
                 <div 
                   key={idx}
@@ -198,11 +204,56 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
                         <span className="text-[9px] text-gray-400 font-bold line-through">₹{v.price.toFixed(0)}</span>
                       )}
                     </div>
+                    {vPricePerUnit && (
+                      <span className="text-[9px] text-gray-400 font-bold mt-1.5 block">{vPricePerUnit}</span>
+                    )}
                   </div>
-                  
-                  {vPricePerUnit && (
-                    <span className="text-[9px] text-gray-400 font-bold mt-1.5 block">{vPricePerUnit}</span>
-                  )}
+
+                  {/* Add to Cart inside variant section */}
+                  <div className="w-full">
+                    {vQty === 0 ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const productToCart = {
+                            ...product,
+                            selectedUnit: v.unit,
+                            selectedPrice: v.price,
+                            selectedDiscountPrice: v.discount_price
+                          };
+                          addToCart(productToCart);
+                          setSelectedVariant(v);
+                        }}
+                        className="variant-add-btn"
+                      >
+                        ADD
+                      </button>
+                    ) : (
+                      <div className="variant-qty-selector" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => removeFromCart(product.id, v.unit)}
+                          className="variant-qty-btn"
+                        >
+                          <Minus size={10} className="stroke-[3]" />
+                        </button>
+                        <span className="variant-qty-val">{vQty}</span>
+                        <button
+                          onClick={() => {
+                            const productToCart = {
+                              ...product,
+                              selectedUnit: v.unit,
+                              selectedPrice: v.price,
+                              selectedDiscountPrice: v.discount_price
+                            };
+                            addToCart(productToCart);
+                          }}
+                          className="variant-qty-btn"
+                        >
+                          <Plus size={10} className="stroke-[3]" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
