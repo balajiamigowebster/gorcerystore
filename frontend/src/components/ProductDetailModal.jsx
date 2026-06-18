@@ -93,19 +93,12 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center animate-fade-in p-0 md:p-4">
+    <div className="product-detail-modal-overlay">
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-xs" onClick={onClose} />
+      <div className="product-detail-modal-backdrop" onClick={onClose} />
       
       {/* Bottom Sheet on Mobile / Centered Modal on Desktop */}
-      <div 
-        className="relative bg-white w-full md:max-w-md shadow-2xl z-50 overflow-hidden flex flex-col text-left rounded-t-3xl md:rounded-3xl"
-        style={{
-          maxHeight: '92vh',
-          height: 'auto',
-          animation: 'fadeInModal 0.25s ease-out'
-        }}
-      >
+      <div className="product-detail-modal-container">
         {/* Navigation Action Header */}
         <div className="p-4 flex items-center justify-between z-10 bg-white">
           <button 
@@ -130,7 +123,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
         <div className="flex-grow overflow-y-auto px-5 pb-6">
           
           {/* Main Large Product Image */}
-          <div className="relative w-full h-64 md:h-72 flex items-center justify-center bg-[#fcfcfd] rounded-2xl overflow-hidden select-none border border-gray-100/40">
+          <div className="product-detail-image-box">
             <img 
               src={product.image_url} 
               alt={product.name} 
@@ -185,40 +178,34 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
           </span>
 
           {/* Variants Selector Header */}
-          <div className="mt-4">
-            <div className="flex flex-row gap-3 overflow-x-auto pb-1">
-              {variants.map((v, idx) => {
-                const isSelected = selectedVariant && selectedVariant.unit === v.unit;
-                const vActivePrice = v.discount_price !== null ? v.discount_price : v.price;
-                const vPricePerUnit = getPricePerUnit(vActivePrice, v.unit);
+          <div className="variants-row-container">
+            {variants.map((v, idx) => {
+              const isSelected = selectedVariant && selectedVariant.unit === v.unit;
+              const vActivePrice = v.discount_price !== null ? v.discount_price : v.price;
+              const vPricePerUnit = getPricePerUnit(vActivePrice, v.unit);
 
-                return (
-                  <div 
-                    key={idx}
-                    onClick={() => setSelectedVariant(v)}
-                    className={`flex flex-col justify-between p-3.5 rounded-2xl border-2 cursor-pointer transition-all duration-200 min-w-[95px] flex-1 text-left ${
-                      isSelected 
-                        ? 'border-[#0052fe] bg-white shadow-xs' 
-                        : 'border-gray-200/80 bg-white hover:border-gray-300'
-                    }`}
-                  >
-                    <div>
-                      <h4 className="text-xs font-black text-gray-800">{v.unit}</h4>
-                      <div className="flex items-baseline gap-1 mt-1">
-                        <span className="text-xs font-black text-gray-900">₹{vActivePrice.toFixed(0)}</span>
-                        {v.discount_price !== null && (
-                          <span className="text-[9px] text-gray-400 font-bold line-through">₹{v.price.toFixed(0)}</span>
-                        )}
-                      </div>
+              return (
+                <div 
+                  key={idx}
+                  onClick={() => setSelectedVariant(v)}
+                  className={`variant-card ${isSelected ? 'selected' : ''}`}
+                >
+                  <div>
+                    <h4 className="text-xs font-black text-gray-800">{v.unit}</h4>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="text-xs font-black text-gray-900">₹{vActivePrice.toFixed(0)}</span>
+                      {v.discount_price !== null && (
+                        <span className="text-[9px] text-gray-400 font-bold line-through">₹{v.price.toFixed(0)}</span>
+                      )}
                     </div>
-                    
-                    {vPricePerUnit && (
-                      <span className="text-[9px] text-gray-400 font-bold mt-1.5 block">{vPricePerUnit}</span>
-                    )}
                   </div>
-                );
-              })}
-            </div>
+                  
+                  {vPricePerUnit && (
+                    <span className="text-[9px] text-gray-400 font-bold mt-1.5 block">{vPricePerUnit}</span>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Divider */}
@@ -268,7 +255,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
           </div>
 
           {/* Payment Offers Block */}
-          <div className="mt-5 border border-dashed border-[#0052fe]/20 bg-[#0052fe]/[0.01] rounded-2xl p-3.5 flex items-center justify-between text-left">
+          <div className="offer-tag-container">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-blue-50 rounded-xl flex items-center justify-center text-[#0052fe] font-black text-xs">
                 Offer
