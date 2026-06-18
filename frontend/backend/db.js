@@ -3,8 +3,8 @@ require('dotenv').config();
 
 const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
+  user: process.env.DB_USER || 'amigoweb_gorcerystore',
+  password: process.env.DB_PASSWORD || 'Aammigo@123',
   port: process.env.DB_PORT || 3306
 };
 
@@ -12,7 +12,7 @@ let pool;
 let isInitialized = false;
 
 async function getPool() {
-  const dbName = process.env.DB_NAME || 'zepto_db';
+  const dbName = process.env.DB_NAME || 'amigoweb_gorcerystore';
   if (!pool) {
     pool = mysql.createPool({
       ...dbConfig,
