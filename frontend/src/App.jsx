@@ -11,6 +11,7 @@ import LoginModal from './components/LoginModal';
 import OrderTracker from './components/OrderTracker';
 import AdminDashboard from './components/AdminDashboard';
 import CategoryProductRow from './components/CategoryProductRow';
+import MobileMenuDrawer from './components/MobileMenuDrawer';
 import { Sparkles, HelpCircle, Shield } from 'lucide-react';
 
 function AppContent() {
@@ -32,6 +33,7 @@ function AppContent() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [addressOpen, setAddressOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Tip selected during checkout
   const [driverTip, setDriverTip] = useState(0);
@@ -190,7 +192,7 @@ function AppContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50/50">
+    <div className="flex flex-col min-h-screen bg-gray-50/50 overflow-x-hidden w-full">
       
       {/* Header */}
       {activePage !== 'admin' && (
@@ -208,6 +210,7 @@ function AppContent() {
           currentSearch={searchQuery}
           onOpenAddressModal={() => setAddressOpen(true)}
           onOpenLoginModal={() => setLoginOpen(true)}
+          onOpenMobileMenu={() => setMobileMenuOpen(true)}
         />
       )}
 
@@ -369,6 +372,32 @@ function AppContent() {
         isOpen={loginOpen}
         onClose={() => {
           setLoginOpen(false);
+        }}
+      />
+
+      <MobileMenuDrawer
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        onNavigate={(page) => {
+          setMobileMenuOpen(false);
+          setActivePage(page);
+          if (page === 'home') {
+            setActiveCategory(null);
+            setSearchQuery('');
+            setActiveSubHeaderTab('all');
+          }
+        }}
+        onOpenCart={() => {
+          setMobileMenuOpen(false);
+          setCartOpen(true);
+        }}
+        onOpenAddressModal={() => {
+          setMobileMenuOpen(false);
+          setAddressOpen(true);
+        }}
+        onOpenLoginModal={() => {
+          setMobileMenuOpen(false);
+          setLoginOpen(true);
         }}
       />
 

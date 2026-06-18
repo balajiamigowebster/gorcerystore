@@ -52,12 +52,16 @@ button {
   margin: 0;
 }
 
+html, body, #root {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-app);
   color: var(--text-main);
   line-height: 1.5;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -185,7 +189,7 @@ body {
   .md\:order-3 { order: 3; }
   .md\:w-auto { width: auto; }
   .md\:flex-grow { flex-grow: 1; }
-  .md\:max-w-xl { max-w: 36rem; }
+  .md\:max-w-xl { max-width: 36rem; }
   .md\:gap-8 { gap: 2rem; }
 }
  

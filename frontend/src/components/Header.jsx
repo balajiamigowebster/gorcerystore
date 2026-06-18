@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Search, ShoppingCart, User, LogOut, ChevronDown } from 'lucide-react';
+import { Search, ShoppingCart, User, LogOut, ChevronDown, Menu } from 'lucide-react';
 import { useCart as useCartContext } from '../context/CartContext';
 
-export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch, onOpenAddressModal, onOpenLoginModal }) {
+export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch, onOpenAddressModal, onOpenLoginModal, onOpenMobileMenu }) {
   const { itemCount, cartSubtotal, deliveryAddress, user, logout } = useCartContext();
   const [searchValue, setSearchValue] = useState(currentSearch || '');
 
@@ -23,6 +23,15 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
         
         {/* Left Side: Logo & Address */}
         <div className="flex items-center gap-2 md:gap-4 flex-shrink-0 order-1">
+          {/* Hamburger Menu on Mobile */}
+          <button 
+            onClick={onOpenMobileMenu}
+            className="md:hidden text-gray-700 hover:text-purple-800 p-1 mr-1 transition cursor-pointer flex items-center justify-center"
+            title="Open Menu"
+          >
+            <Menu size={22} />
+          </button>
+
           {/* Amigocart Logo */}
           <div 
             onClick={() => { setSearchValue(''); onNavigate('home'); }} 
@@ -71,7 +80,7 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
 
           {/* User Section (Vertical) */}
           {user ? (
-            <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
               <button 
                 onClick={logout} 
                 className="flex flex-col items-center justify-center text-gray-770 hover:text-red-600 transition duration-150 cursor-pointer"
@@ -84,7 +93,7 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
           ) : (
             <button 
               onClick={onOpenLoginModal}
-              className="flex flex-col items-center justify-center text-gray-750 hover:text-purple-800 transition duration-150 cursor-pointer"
+              className="hidden md:flex flex-col items-center justify-center text-gray-750 hover:text-purple-800 transition duration-150 cursor-pointer"
             >
               <User size={20} className="text-gray-600" />
               <span className="text-[10px] font-extrabold mt-1">Login</span>
