@@ -329,17 +329,21 @@ app.put('/api/products/:id', async (req, res) => {
 });
 
 
-// Start server
-async function start() {
-  try {
-    await initializeDatabase();
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
-  } catch (error) {
-    console.error('Unable to start Express server:', error);
-    process.exit(1);
-  }
-}
+// Export app for serverless deployment
+module.exports = app;
 
-start();
+// Start server locally if not on Vercel
+if (!process.env.VERCEL) {
+  async function start() {
+    try {
+      await initializeDatabase();
+      app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+      });
+    } catch (error) {
+      console.error('Unable to start Express server:', error);
+      process.exit(1);
+    }
+  }
+  start();
+}
