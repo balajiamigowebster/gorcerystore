@@ -322,6 +322,44 @@ function AppContent() {
                   })}
                 </div>
               )}
+
+              {/* SEO Keyword Copy Block */}
+              {!activeCategory && !searchQuery && (
+                <div className="mt-16 bg-white border border-gray-100 rounded-3xl p-8 text-left shadow-xs">
+                  <h2 className="text-lg font-extrabold text-purple-950 mb-3">
+                    Amigocart - India's Fastest Online Grocery Delivery App
+                  </h2>
+                  <p className="text-xs text-gray-500 leading-relaxed mb-4">
+                    Welcome to <strong>Amigocart</strong>, your premium online supermarket delivering daily essentials to your doorstep in 10 minutes. We specialize in bringing you farm-fresh fruits & vegetables, fresh milk, organic set curd, bakery bread, eggs, and groceries with maximum speed and convenience.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-gray-50">
+                    <div>
+                      <h3 className="text-xs font-black text-purple-900 uppercase tracking-wider mb-2">
+                        Fresh Fruits & Vegetables
+                      </h3>
+                      <p className="text-[11px] text-gray-400 leading-relaxed">
+                        Buy fresh fruits online and order organic vegetables online. We source directly from local farms in Bangalore and Chennai to ensure premium quality.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-black text-purple-900 uppercase tracking-wider mb-2">
+                        10-Minute Grocery Delivery
+                      </h3>
+                      <p className="text-[11px] text-gray-400 leading-relaxed">
+                        Need milk, bread, eggs, or snacks instantly? Amigocart's hyperlocal delivery fleet ensures your daily essentials arrive in under 10 minutes.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-black text-purple-900 uppercase tracking-wider mb-2">
+                        Organic Dairy & Staples
+                      </h3>
+                      <p className="text-[11px] text-gray-400 leading-relaxed">
+                        Shop popular items like Akshayakalpa set curd, Nandini ghee, and daily essentials. Choose from multiple weight options (500g, 1kg, 2kg) to fit your family's needs.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
           </div>
