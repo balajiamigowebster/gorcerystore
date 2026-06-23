@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow admin dashboard and database operations
+Disallow: /admin
+Disallow: /api/admin/
+Disallow: /api/debug-db
+
+Sitemap: https://gorcerystore.vercel.app/sitemap.xml

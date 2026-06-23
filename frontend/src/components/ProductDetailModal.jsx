@@ -33,6 +33,71 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
     }
   }, [isOpen, variants]);
 
+  // Dynamic SEO Metadata and JSON-LD Product Schema injection
+  useEffect(() => {
+    if (isOpen && product) {
+      const brandName = product.name.split(' ')[0];
+      const activePrice = selectedVariant 
+        ? (selectedVariant.discount_price !== null ? selectedVariant.discount_price : selectedVariant.price)
+        : Number(product.price);
+
+      // 1. Update Document Title
+      const prevTitle = document.title;
+      document.title = `${product.name} - Buy Online | Amigocart`;
+
+      // 2. Update Meta Description
+      let metaDescription = document.querySelector('meta[name="description"]');
+      const prevDesc = metaDescription ? metaDescription.getAttribute('content') : '';
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta');
+        metaDescription.name = 'description';
+        document.head.appendChild(metaDescription);
+      }
+      metaDescription.setAttribute('content', `${product.description} Get it delivered in 10 minutes from Amigocart.`);
+
+      // 3. Inject JSON-LD Product Schema
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.name,
+        "image": product.image_url,
+        "description": product.description,
+        "brand": {
+          "@type": "Brand",
+          "name": brandName
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": window.location.href,
+          "priceCurrency": "INR",
+          "price": activePrice,
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+        }
+      };
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'product-jsonld';
+      script.text = JSON.stringify(schema);
+      document.head.appendChild(script);
+
+      return () => {
+        // Restore title
+        document.title = prevTitle;
+        // Restore description
+        if (metaDescription) {
+          metaDescription.setAttribute('content', prevDesc);
+        }
+        // Remove script
+        const existingScript = document.getElementById('product-jsonld');
+        if (existingScript) {
+          existingScript.remove();
+        }
+      };
+    }
+  }, [isOpen, product, selectedVariant]);
+
   if (!isOpen || !product) return null;
 
   // Helpers
