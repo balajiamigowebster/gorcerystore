@@ -43,7 +43,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
 
       // 1. Update Document Title
       const prevTitle = document.title;
-      document.title = `${product.name} - Buy Online | Amigocart`;
+      document.title = `${product.name} - Buy Online | Amigobasket`;
 
       // 2. Update Meta Description
       let metaDescription = document.querySelector('meta[name="description"]');
@@ -53,7 +53,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
         metaDescription.name = 'description';
         document.head.appendChild(metaDescription);
       }
-      metaDescription.setAttribute('content', `${product.description} Get it delivered in 10 minutes from Amigocart.`);
+      metaDescription.setAttribute('content', `${product.description} Get it delivered in 10 minutes from Amigobasket.`);
 
       // 3. Update Canonical Link
       let canonicalLink = document.querySelector('link[rel="canonical"]');

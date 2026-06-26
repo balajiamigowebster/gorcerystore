@@ -32,13 +32,13 @@ export default function Header({ onOpenCart, onNavigate, onSearch, currentSearch
             <Menu size={22} />
           </button>
 
-          {/* Amigocart Logo */}
+          {/* Amigobasket Logo */}
           <div 
             onClick={() => { setSearchValue(''); onNavigate('home'); }} 
             className="cursor-pointer flex items-center"
-            title="Amigocart Home"
+            title="Amigobasket Home"
           >
-            <img src="/amigo_logo.png" alt="Amigocart Logo" className="header-logo" />
+            <img src="/amigo_logo.png" alt="Amigobasket Logo" className="header-logo" />
           </div>
 
           {/* Location Picker */}

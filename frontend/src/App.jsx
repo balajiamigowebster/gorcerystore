@@ -338,7 +338,7 @@ function AppContent() {
           <div className="container pb-12">
             {/* Hidden H1 for SEO Crawler optimization targeting core keywords */}
             <h1 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>
-              Amigocart - Online Grocery Store & 10-Minute Online Grocery Delivery Service
+              Amigobasket - Online Grocery Store & 10-Minute Online Grocery Delivery Service
             </h1>
             
             {/* Categories Selector */}
@@ -439,10 +439,10 @@ function AppContent() {
               {!activeCategory && !searchQuery && (
                 <div className="mt-16 bg-white border border-gray-100 rounded-3xl p-8 text-left shadow-xs">
                   <h2 className="text-lg font-extrabold text-purple-950 mb-3">
-                    Amigocart - India's Fastest Online Grocery Delivery App
+                    Amigobasket - India's Fastest Online Grocery Delivery App
                   </h2>
                   <p className="text-xs text-gray-500 leading-relaxed mb-4">
-                    Welcome to <strong>Amigocart</strong>, your premium online supermarket delivering daily essentials to your doorstep in 10 minutes. We specialize in bringing you farm-fresh fruits & vegetables, fresh milk, organic set curd, bakery bread, eggs, and groceries with maximum speed and convenience.
+                    Welcome to <strong>Amigobasket</strong>, your premium online supermarket delivering daily essentials to your doorstep in 10 minutes. We specialize in bringing you farm-fresh fruits & vegetables, fresh milk, organic set curd, bakery bread, eggs, and groceries with maximum speed and convenience.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-gray-50">
                     <div>
@@ -458,7 +458,7 @@ function AppContent() {
                         10-Minute Grocery Delivery
                       </h3>
                       <p className="text-[11px] text-gray-400 leading-relaxed">
-                        Need milk, bread, eggs, or snacks instantly? Amigocart's hyperlocal delivery fleet ensures your daily essentials arrive in under 10 minutes.
+                        Need milk, bread, eggs, or snacks instantly? Amigobasket's hyperlocal delivery fleet ensures your daily essentials arrive in under 10 minutes.
                       </p>
                     </div>
                     <div>
@@ -499,7 +499,7 @@ function AppContent() {
       {activePage !== 'admin' && (
         <footer className="bg-white border-t border-gray-100 py-6 mt-12 text-center text-xs text-gray-500">
           <div className="container flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="font-medium">© 2026 Amigocart. All mock rights reserved. Designed and developed by amigowebster.</span>
+            <span className="font-medium">© 2026 Amigobasket. All mock rights reserved. Designed and developed by amigowebster.</span>
             <div className="flex gap-4 font-bold text-purple-700">
               <a href="#" className="hover:underline flex items-center gap-1"><Shield size={12} /> Privacy Policy</a>
               <a href="#" className="hover:underline flex items-center gap-1"><HelpCircle size={12} /> Support Center</a>

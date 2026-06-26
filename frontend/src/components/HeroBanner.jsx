@@ -16,7 +16,7 @@ export default function HeroBanner({ onSelectCategory }) {
         {/* Banner Top Info */}
         <div className="z-10">
           <span className="text-[10px] font-black text-purple-700 tracking-wider uppercase block">
-            ALL NEW AMIGOCART EXPERIENCE
+            ALL NEW AMIGOBASKET EXPERIENCE
           </span>
           
           {/* Two Side-by-side white cards */}
@@ -98,7 +98,7 @@ export default function HeroBanner({ onSelectCategory }) {
             Paan Corner
           </h2>
           <p className="text-[12px] font-semibold text-emerald-200 max-w-[240px] leading-snug">
-            Get smoking accessories, fresheners & more in Minutes this IPL with Amigocart!
+            Get smoking accessories, fresheners & more in Minutes this IPL with Amigobasket!
           </p>
         </div>
 
