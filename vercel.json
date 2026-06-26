@@ -19,6 +19,10 @@
       "dest": "frontend/api/index.js"
     },
     {
+      "src": "/sitemap.xml",
+      "dest": "frontend/api/index.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "frontend/$1"
     }

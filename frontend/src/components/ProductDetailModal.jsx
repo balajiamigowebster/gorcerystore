@@ -33,7 +33,7 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
     }
   }, [isOpen, variants]);
 
-  // Dynamic SEO Metadata and JSON-LD Product Schema injection
+  // Dynamic SEO Metadata and JSON-LD Product/Breadcrumb Schema injection
   useEffect(() => {
     if (isOpen && product) {
       const brandName = product.name.split(' ')[0];
@@ -55,31 +55,67 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
       }
       metaDescription.setAttribute('content', `${product.description} Get it delivered in 10 minutes from Amigocart.`);
 
-      // 3. Inject JSON-LD Product Schema
-      const schema = {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": product.name,
-        "image": product.image_url,
-        "description": product.description,
-        "brand": {
-          "@type": "Brand",
-          "name": brandName
+      // 3. Update Canonical Link
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      const prevCanonical = canonicalLink ? canonicalLink.getAttribute('href') : '';
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.setAttribute('href', `https://gorcerystore.vercel.app/?product=${product.id}`);
+
+      // 4. Inject JSON-LD Product & Breadcrumb Schema Array
+      const schemas = [
+        {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": product.name,
+          "image": product.image_url,
+          "description": product.description,
+          "brand": {
+            "@type": "Brand",
+            "name": brandName
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": `https://gorcerystore.vercel.app/?product=${product.id}`,
+            "priceCurrency": "INR",
+            "price": activePrice,
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+          }
         },
-        "offers": {
-          "@type": "Offer",
-          "url": window.location.href,
-          "priceCurrency": "INR",
-          "price": activePrice,
-          "itemCondition": "https://schema.org/NewCondition",
-          "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://gorcerystore.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": product.category_name || "Groceries",
+              "item": product.category_id ? `https://gorcerystore.vercel.app/?category=${product.category_id}` : "https://gorcerystore.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": product.name,
+              "item": `https://gorcerystore.vercel.app/?product=${product.id}`
+            }
+          ]
         }
-      };
+      ];
 
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.id = 'product-jsonld';
-      script.text = JSON.stringify(schema);
+      script.text = JSON.stringify(schemas);
       document.head.appendChild(script);
 
       return () => {
@@ -88,6 +124,14 @@ export default function ProductDetailModal({ product, isOpen, onClose }) {
         // Restore description
         if (metaDescription) {
           metaDescription.setAttribute('content', prevDesc);
+        }
+        // Restore canonical link
+        if (canonicalLink) {
+          if (prevCanonical) {
+            canonicalLink.setAttribute('href', prevCanonical);
+          } else {
+            canonicalLink.remove();
+          }
         }
         // Remove script
         const existingScript = document.getElementById('product-jsonld');

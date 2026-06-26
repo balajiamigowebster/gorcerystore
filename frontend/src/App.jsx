@@ -94,6 +94,114 @@ function AppContent() {
     loadProducts();
   }, [activeCategory, searchQuery]);
 
+
+  // 3. URL Router - Initialize state from URL on mount & handle popstate browser navigation
+  useEffect(() => {
+    const initFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const catId = params.get('category');
+      const prodId = params.get('product');
+      const search = params.get('search');
+      const page = params.get('page');
+      const orderId = params.get('orderId');
+
+      if (page === 'admin') {
+        setActivePage('admin');
+      } else if (page === 'tracker') {
+        setActivePage('tracker');
+        if (orderId) setSelectedOrderId(Number(orderId));
+      } else {
+        setActivePage('home');
+      }
+
+      if (catId) {
+        setActiveCategory(Number(catId));
+      } else {
+        setActiveCategory(null);
+      }
+
+      if (search) {
+        setSearchQuery(decodeURIComponent(search));
+      } else {
+        setSearchQuery('');
+      }
+
+      if (prodId) {
+        fetch(`/api/products/${prodId}`)
+          .then(res => {
+            if (res.ok) return res.json();
+            throw new Error('Product not found');
+          })
+          .then(prod => {
+            setDetailProduct(prod);
+          })
+          .catch(err => {
+            console.error('Error fetching deep-linked product:', err);
+            setDetailProduct(null);
+          });
+      } else {
+        setDetailProduct(null);
+      }
+    };
+
+    // Run once on initial mount
+    initFromUrl();
+
+    // Listen to browser Back/Forward navigation
+    window.addEventListener('popstate', initFromUrl);
+    return () => window.removeEventListener('popstate', initFromUrl);
+  }, []);
+
+  // 4. URL Router - Synchronize React states to Browser URL query params
+  const isFirstRender = React.useRef(true);
+  useEffect(() => {
+    // Skip updating URL on mount (handled by mount init effect)
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const params = new URLSearchParams();
+
+    if (activePage !== 'home') {
+      params.set('page', activePage);
+      if (activePage === 'tracker' && selectedOrderId) {
+        params.set('orderId', selectedOrderId);
+      }
+    } else {
+      if (detailProduct) {
+        params.set('product', detailProduct.id);
+      } else {
+        if (activeCategory) {
+          params.set('category', activeCategory);
+        }
+        if (searchQuery) {
+          params.set('search', searchQuery);
+        }
+      }
+    }
+
+    const newQueryString = params.toString();
+    const currentQueryString = window.location.search.replace(/^\?/, '');
+
+    if (newQueryString !== currentQueryString) {
+      const newUrl = newQueryString ? `/?${newQueryString}` : '/';
+      window.history.pushState(null, '', newUrl);
+    }
+  }, [activeCategory, searchQuery, activePage, selectedOrderId, detailProduct]);
+
+  // 5. Sync subheader active tab when activeCategory is loaded/changed via URL deep-linking
+  useEffect(() => {
+    if (activeCategory === null) {
+      setActiveSubHeaderTab('all');
+    } else if (categories.length > 0) {
+      const catName = categories.find(c => c.id === activeCategory)?.name;
+      if (catName === 'Fruits & Vegetables') setActiveSubHeaderTab('fresh');
+      else if (catName === 'Zepto Cafe') setActiveSubHeaderTab('cafe');
+      else setActiveSubHeaderTab('all');
+    }
+  }, [activeCategory, categories]);
+
   // Handle category selection
   const handleSelectCategory = (catId) => {
     setSearchQuery(''); // Reset search when clicking category

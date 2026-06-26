@@ -358,6 +358,51 @@ app.put('/api/products/:id', async (req, res) => {
   }
 });
 
+// 11. Dynamic XML Sitemap Route for SEO
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const pool = await getPool();
+    const [categories] = await pool.query('SELECT id FROM categories');
+    const [products] = await pool.query('SELECT id FROM products');
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+    // 1. Homepage URL
+    xml += `  <url>\n`;
+    xml += `    <loc>https://gorcerystore.vercel.app/</loc>\n`;
+    xml += `    <changefreq>daily</changefreq>\n`;
+    xml += `    <priority>1.0</priority>\n`;
+    xml += `  </url>\n`;
+
+    // 2. Category URLs
+    categories.forEach(cat => {
+      xml += `  <url>\n`;
+      xml += `    <loc>https://gorcerystore.vercel.app/?category=${cat.id}</loc>\n`;
+      xml += `    <changefreq>weekly</changefreq>\n`;
+      xml += `    <priority>0.8</priority>\n`;
+      xml += `  </url>\n`;
+    });
+
+    // 3. Product URLs
+    products.forEach(prod => {
+      xml += `  <url>\n`;
+      xml += `    <loc>https://gorcerystore.vercel.app/?product=${prod.id}</loc>\n`;
+      xml += `    <changefreq>weekly</changefreq>\n`;
+      xml += `    <priority>0.7</priority>\n`;
+      xml += `  </url>\n`;
+    });
+
+    xml += `</urlset>`;
+
+    res.header('Content-Type', 'application/xml');
+    res.status(200).send(xml);
+  } catch (error) {
+    console.error('Error generating sitemap.xml:', error);
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 
 // Export app for serverless deployment
 module.exports = app;
