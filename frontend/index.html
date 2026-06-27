@@ -26,6 +26,51 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+    
+    <!-- Local Business Structured Data Schema for Geo-targeted Rankings -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "Amigobasket",
+      "image": "https://gorcerystore.vercel.app/amigo_logo.png",
+      "url": "https://gorcerystore.vercel.app/",
+      "telephone": "+91 94453 32233",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Manikandan Nagar, 1st Main Rd, Kovilambakkam",
+        "addressLocality": "Chennai",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "600129",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 12.9248,
+        "longitude": 80.1989
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "description": "Amigobasket is Chennai and Bangalore's premier online grocery store, providing super-fast 10-minute online grocery delivery. Shop fresh fruits & vegetables, milk, eggs, bread, dairy, and daily supermarket essentials delivered to your doorstep.",
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Chennai"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Bangalore"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
