@@ -352,10 +352,6 @@ export default function AdminDashboard({ onBackToHome }) {
             </button>
           </form>
 
-          <div className="mt-6 border-t border-gray-100 pt-4 flex flex-col gap-1 text-center text-[10px] text-gray-400 font-bold bg-gray-50 p-3 rounded-xl">
-            <span>Mock Login Access Credentials:</span>
-            <span className="text-purple-800 uppercase font-black">Username: admin | Password: admin123</span>
-          </div>
 
           <button 
             onClick={onBackToHome}
