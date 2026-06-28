@@ -338,7 +338,7 @@ function AppContent() {
           <div className="container pb-12">
             {/* Hidden H1 for SEO Crawler optimization targeting core keywords */}
             <h1 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>
-              Amigobasket - Online Grocery Store & 10-Minute Online Grocery Delivery Service
+              Amigobasket - Grocery Store & Online Grocery Delivery in Kovilambakkam, Manikandan Nagar
             </h1>
             
             {/* Categories Selector */}
