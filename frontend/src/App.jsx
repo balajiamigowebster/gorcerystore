@@ -499,7 +499,7 @@ function AppContent() {
       {activePage !== 'admin' && (
         <footer className="bg-white border-t border-gray-100 py-6 mt-12 text-center text-xs text-gray-500">
           <div className="container flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="font-medium">© 2026 Amigobasket. All mock rights reserved. Designed and developed by amigowebster.</span>
+            <span className="font-medium">© 2026 Amigobasket. All mock rights reserved. Designed and developed by amigowebster. <a href="https://maps.google.com/?q=amigobasket+Kovilambakkam" target="_blank" rel="noopener noreferrer" className="text-purple-800 hover:underline font-bold ml-1.5">Find our grocery store in Kovilambakkam</a></span>
             <div className="flex gap-4 font-bold text-purple-700">
               <a href="#" className="hover:underline flex items-center gap-1"><Shield size={12} /> Privacy Policy</a>
               <a href="#" className="hover:underline flex items-center gap-1"><HelpCircle size={12} /> Support Center</a>
